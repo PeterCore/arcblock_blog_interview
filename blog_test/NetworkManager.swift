@@ -24,7 +24,7 @@ class NetworkManager {
                     debugDescription: "日期格式不符合 ISO8601 带小数秒的格式: \(dateString)")
             }
         }
-        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.global().async {
             AF.request(urlString)
                 .validate()
                 .responseDecodable(of: BlogResponse.self, decoder: decoder) { response in
