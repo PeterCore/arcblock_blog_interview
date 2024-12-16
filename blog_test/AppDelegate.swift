@@ -10,10 +10,22 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+//        // Override point for customization after application launch.
+//        // 将“自定义的视图控制器（ViewController()）”添加到“导航控制器UINavigationController”中
+//              let nav = UINavigationController(rootViewController: ViewController())
+//              // 新建窗口
+//              self.window = UIWindow(frame: UIScreen.main.bounds)
+//              // 设置窗口的背景色为白色
+//              self.window?.backgroundColor = .white
+//              // 设置窗口的“根视图控制器”为上面自定义的导航控制器nav
+//              self.window?.rootViewController = nav
+//              // 设置窗口到屏幕最前端
+//              self.window?.makeKeyAndVisible()
+       
+
         return true
     }
 

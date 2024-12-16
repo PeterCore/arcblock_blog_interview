@@ -9,15 +9,22 @@ import Foundation
 import UIKit
 import SkeletonView
 
+extension UIView {
+    func parentViewController() -> UIViewController? {
+        var responder: UIResponder? = self
+        while responder != nil {
+            responder = responder?.next
+            if let viewController = responder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}
+
 class BlogListView: UIView, UITableViewDelegate, SkeletonTableViewDataSource {
  
     
-   
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-//    
     private let tableView = UITableView(frame: .zero, style: .plain)
     var posts: [BlogPost] = []
     
@@ -109,6 +116,15 @@ class BlogListView: UIView, UITableViewDelegate, SkeletonTableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 可在此添加点击 Cell 的回调逻辑（如通过 delegate 回调给外部的 ViewController）
-        print("123131313")
+        var webUrl = "https://www.arcblock.io/blog/zh/"
+        let post = posts[indexPath.row]
+        webUrl = "\(webUrl)\(post.slug ?? "")"
+        if let url = URL(string: webUrl) {
+            if let vc = self.parentViewController() {
+                let nextVC = BlogDetailViewController(url: url)
+                vc.navigationController?.pushViewController(nextVC, animated: true)
+            }
+        }
+       
     }
 }

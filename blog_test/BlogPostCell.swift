@@ -111,7 +111,11 @@ class BlogPostCell: UITableViewCell {
         var coverUrl = post.cover ?? "";
          coverUrl = "https://www.arcblock.io/blog/uploads/\(coverUrl)";
         if let url = URL(string: coverUrl) {
-            coverImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "photo"))
+            coverImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "photo"), options: [
+                .transition(.fade(1)),   // 图片加载完成后淡入动画
+                .cacheMemoryOnly,          // 只使用内存缓存
+                .backgroundDecode          // 后台解码图片
+            ])
         } else {
             coverImageView.image = UIImage(systemName: "photo")
         }

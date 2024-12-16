@@ -15,38 +15,27 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.view.backgroundColor  = .blue
-        view.addSubview(blogListView)
-        blogListView.snp.makeConstraints { make in
-           make.edges.equalToSuperview()
-        }
-        loadData(page: 1);
+        self.view.backgroundColor  = .white
+        let button = UIButton(type: .system)
+       button.setTitle("点击跳转博客列表", for: .normal)
+       button.addTarget(self, action: #selector(pushToNextVC), for: .touchUpInside)
+
+       // 将按钮添加到视图
+       view.addSubview(button)
+
+       // 使用 Auto Layout 约束按钮（使用 iOS 9+ 的约束方式）
+       button.translatesAutoresizingMaskIntoConstraints = false
+       NSLayoutConstraint.activate([
+           button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+           button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+       ])
     }
     
-    func loadData(page: Int) {
-          NetworkManager.shared.fetchBlogs(page: page, size: pageSize) { result in
-              switch result {
-              case .success(let blogResponse):
-                  // 成功获取数据，在此处理 blogResponse.data
-                  // 注意：Alamofire 的回调默认是在主线程执行，可直接刷新 UI
-        
-                  self.blogListView.updatePosts(blogResponse.data)
-                  self.blogListView.hideSkeleton();
-                
-                 // 例如：currentPage += 1
-              case .failure(let error):
-                  // 处理错误，比如弹出一个提示框
-                  print("请求失败:", error)
-              }
-          }
-      }
-      
-      // 当你需要加载下一页时
-      func loadNextPage() {
-          currentPage += 1
-          loadData(page: currentPage)
-      }
-
+    @objc func pushToNextVC() {
+            let nextVC = BlogListViewController()
+            // 通过导航控制器 push 到下一个页面
+            navigationController?.pushViewController(nextVC, animated: true)
+        }
 
 }
 
