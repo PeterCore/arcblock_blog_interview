@@ -60,28 +60,28 @@ struct Meta: Codable {
 struct BlogPost: Codable {
     let latestCommenters: [String]
     let meta: Meta
-    let id: String
-    let slug: String
-    let title: String
-    let author: String
-    let cover: String
-    let excerpt: String
-    let boardId: String
-    let createdAt: Date
-    let updatedAt: Date
-    let commentCount: Int
-    let type: String
+    let id: String?
+    let slug: String?
+    let title: String?
+    let author: String?
+    let cover: String?
+    let excerpt: String?
+    let boardId: String?
+    let createdAt: Date?
+    let updatedAt: Date?
+    let commentCount: Int?
+    let type: String?
     let status: String
     let publishTime: Date
-    let labels: [String]
-    let locale: String
+    let labels: [String]?
+    let locale: String?
 }
 
 // 顶层响应结构
 struct BlogResponse: Codable {
     let data: [BlogPost]
-    let total: Int
-    let countAll: Int
+    let total: Int?
+    let countAll: Int?
 }
 
 

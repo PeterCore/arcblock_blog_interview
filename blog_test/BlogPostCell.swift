@@ -108,7 +108,8 @@ class BlogPostCell: UITableViewCell {
     }
     
     func configure(with post: BlogPost) {
-        let coverUrl = "https://www.arcblock.io/blog/uploads/\(post.cover)";
+        var coverUrl = post.cover ?? "";
+         coverUrl = "https://www.arcblock.io/blog/uploads/\(coverUrl)";
         if let url = URL(string: coverUrl) {
             coverImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "photo"))
         } else {
@@ -118,10 +119,13 @@ class BlogPostCell: UITableViewCell {
         titleLabel.text = post.title
         
         tagsView.removeAllTags()
-        for label in post.labels {
+        let posts = post.labels ?? []
+        for label in posts {
             tagsView.addTag(label)
         }
-        
-        dateLabel.text = post.updatedAt.toDateString()
+        if post.updatedAt != nil {
+            dateLabel.text = post.updatedAt!.toDateString()
+
+        }
     }
 }

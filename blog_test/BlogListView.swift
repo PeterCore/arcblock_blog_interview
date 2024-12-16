@@ -7,8 +7,17 @@
 
 import Foundation
 import UIKit
+import SkeletonView
 
-class BlogListView: UIView, UITableViewDelegate, UITableViewDataSource {
+class BlogListView: UIView, UITableViewDelegate, SkeletonTableViewDataSource {
+ 
+    
+   
+    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        <#code#>
+//    }
+//    
     private let tableView = UITableView(frame: .zero, style: .plain)
     var posts: [BlogPost] = []
     
@@ -20,8 +29,6 @@ class BlogListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
    func showSkeleton() {
-//       let customColor = UIColor(red: 236/255, green: 236/255, blue: 236/255, alpha: 1)
-//       tableView.showSkeleton(usingColor: customColor)
        tableView.showAnimatedGradientSkeleton()
    }
        
@@ -58,9 +65,35 @@ class BlogListView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     // MARK: - UITableViewDataSource & Delegate
+
+    //skelentonView
+     func numSections(in collectionSkeletonView: UITableView) -> Int {
+         return 1
+     }
+    
+ 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.isEmpty ? 5 : posts.count
 
+    }
+//    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.isEmpty ? 5 : posts.count
+    }
+        
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "BlogPostCell"
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        guard let cell = skeletonView.dequeueReusableCell(withIdentifier: "BlogPostCell", for: indexPath) as? BlogPostCell else {
+            return UITableViewCell()
+        }
+        if !posts.isEmpty {
+                  let post = posts[indexPath.row]
+                  cell.configure(with: post)
+              }
+        return cell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,12 +104,11 @@ class BlogListView: UIView, UITableViewDelegate, UITableViewDataSource {
                   let post = posts[indexPath.row]
                   cell.configure(with: post)
               }
-//        let post = posts[indexPath.row]
-//        cell.configure(with: post)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 可在此添加点击 Cell 的回调逻辑（如通过 delegate 回调给外部的 ViewController）
+        print("123131313")
     }
 }
