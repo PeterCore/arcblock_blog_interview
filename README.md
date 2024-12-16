@@ -1,6 +1,7 @@
 # arcblock_blog_interview
 arcblock_interview
 
+# 要先使用pod install
 
 # libarclite
 
